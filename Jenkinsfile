@@ -1,7 +1,5 @@
 pipeline {
-    agent {
-        label "control"
-    }
+    agent any
 
     triggers {
         pollSCM '@hourly'
@@ -56,6 +54,10 @@ pipeline {
         }
 
         stage('Multi-Arch Image') {
+            agent {
+                label "amd64&&docker"
+            }
+
             when {
                 allOf {
                     expression { return params.VERSION != 'none' }
