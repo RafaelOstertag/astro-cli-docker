@@ -15,13 +15,14 @@ IMAGE_LATEST="${IMAGE}:latest"
 
 set -x
 docker manifest create "${IMAGE_VERSIONED}" \
- --amend "${IMAGE}:${VERSION}-amd64" \
- --amend "${IMAGE}:${VERSION}-arm64"
+ --amend "${IMAGE_VERSIONED}-amd64" \
+ --amend "${IMAGE_VERSIONED}-arm64"
 
-docker manifest push "${IMAGE_VERSIONED}"
+docker manifest push --purge "${IMAGE_VERSIONED}"
 
 docker manifest create "${IMAGE_LATEST}" \
- --amend "${IMAGE}:${VERSION}-amd64" \
- --amend "${IMAGE}:${VERSION}-arm64"
+ --amend "${IMAGE_VERSIONED}-amd64" \
+ --amend "${IMAGE_VERSIONED}-arm64"
 
-docker manifest push "${IMAGE_LATEST}"
+docker manifest push --purge "${IMAGE_LATEST}"
+
