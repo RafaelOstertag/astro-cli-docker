@@ -9,8 +9,19 @@ then
 fi
 VERSION=$1
 
-docker manifest create "rafaelostertag/astro-cli:${VERSION}" \
- --amend "rafaelostertag/astro-cli:${VERSION}-amd64" \
- --amend "rafaelostertag/astro-cli:${VERSION}-arm64"
+IMAGE="rafaelostertag/astro-cli"
+IMAGE_VERSIONED="${IMAGE}:${VERSION}"
+IMAGE_LATEST="${IMAGE}:latest"
 
-docker manifest push "rafaelostertag/astro-cli:${VERSION}"
+set -x
+docker manifest create "${IMAGE_VERSIONED}" \
+ --amend "${IMAGE}:${VERSION}-amd64" \
+ --amend "${IMAGE}:${VERSION}-arm64"
+
+docker manifest push "${IMAGE_VERSIONED}"
+
+docker manifest create "${IMAGE_LATEST}" \
+ --amend "${IMAGE}:${VERSION}-amd64" \
+ --amend "${IMAGE}:${VERSION}-arm64"
+
+docker manifest push "${IMAGE_LATEST}"
