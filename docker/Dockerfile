@@ -28,4 +28,5 @@ ENV XDG_DATA_HOME=/data
 ENV XDG_CONFIG_HOME=/data
 VOLUME /data
 ENTRYPOINT ["/home/astro/astro-cli"]
+CMD ["--help"]
 
