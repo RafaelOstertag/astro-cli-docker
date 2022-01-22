@@ -1,5 +1,7 @@
 pipeline {
-    agent any
+    agent {
+        label "amd64&&docker"
+    }
 
     triggers {
         pollSCM '@hourly'
@@ -26,10 +28,6 @@ pipeline {
             }
             parallel {
                 stage('AMD64') {
-                    agent {
-                        label "amd64&&docker"
-                    }
-
                     steps {
                         withCredentials([usernamePassword(credentialsId: '750504ce-6f4f-4252-9b2b-5814bd561430', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
                             sh 'docker login --username "$USERNAME" --password "$PASSWORD"'
@@ -54,10 +52,6 @@ pipeline {
         }
 
         stage('Multi-Arch Image') {
-            agent {
-                label "docker"
-            }
-
             when {
                 allOf {
                     expression { return params.VERSION != 'none' }
