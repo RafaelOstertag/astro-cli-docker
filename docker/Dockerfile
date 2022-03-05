@@ -4,7 +4,7 @@ ARG VERSION
 WORKDIR /tmp
 RUN curl -f -k -O https://colossus.kruemel.home/nexus/repository/astro/ch/guengel/astro/cli/astro-cli/${VERSION}/astro-cli-${VERSION}-jar-with-dependencies.jar
 
-FROM --platform=$BUILDPLATFORM ghcr.io/graalvm/graalvm-ce:21.3 AS executable
+FROM --platform=$BUILDPLATFORM ghcr.io/graalvm/graalvm-ce:22 AS executable
 ARG BUILDPLATFORM
 ARG VERSION
 WORKDIR /tmp
